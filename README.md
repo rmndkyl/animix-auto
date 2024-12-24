@@ -1,5 +1,6 @@
-# Animix telegram miniapp bot
-![banner](img/image.png)
+# Animix Miniapp Automation
+![image](https://github.com/user-attachments/assets/77db525e-7917-45d1-9b73-401f6529d9f3)
+
 
 This script automates various tasks for the Animix miniapp telegram.
 
