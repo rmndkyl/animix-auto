@@ -134,7 +134,7 @@ export async function fetchSeasonPass(headers, proxy) {
 // Fetch bonus gatcha
 export async function fetchGatchaBonus(headers, proxy) {
     const data = await requestWithRetry("/public/pet/dna/gacha/bonus", { method: "GET", headers }, 3, proxy);
-    return data?.result || [];
+    return data?.result || {};
 }
 // Claim bonus gatcha 
 export async function claimGatchaBonus(headers, proxy, reward_no) {
@@ -250,4 +250,3 @@ export async function getNewPet(headers, proxy) {
     log.metrics.petsGatcha++;
     return godPower;
 }
-
