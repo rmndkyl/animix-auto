@@ -149,18 +149,20 @@ const mergePetIds = async (headers, proxy) => {
             moms.splice(momIndex, 1);
             dads.splice(dadIndex, 1);
             await delay(1);
-        } else if (moms.length > 1 && momIndex + 1 < moms.length) {
+        } else if (moms.length > 1 && momIndex + 1 < moms.length && dads.length > 0) {
             const nextMom = moms[momIndex + 1];
+            const nextDad = dads[0];
 
             if (mom !== nextMom) {
-                log.info(`Indehoy pets ${mom} and ${dad}💕`);
-            await indehoy(headers, proxy, mom, dad);
-            log.metrics.petsMerged++;
+                log.info(`Indehoy pets ${mom} and ${nextDad}💕`);
+                await indehoy(headers, proxy, mom, nextDad);
+                log.metrics.petsMerged++;
 
                 moms.splice(momIndex, 1);
                 moms.splice(momIndex, 1);
+                dads.splice(0, 1);
                 await delay(1);
-            };
+            }
         } else {
             log.warn("you don't have any couple to indehoy 😢💔.");
             break;
@@ -180,6 +182,7 @@ const doMissions = async (headers, proxy) => {
     if (firstMatchingMission) {
         log.info("Entering mission with available pets:", JSON.stringify(firstMatchingMission));
         await joinMission(headers, proxy, firstMatchingMission);
+        log.metrics.missionsClaimed++;
         await doMissions(headers, proxy);
     } else {
         log.warn("Cannot Join another missions with current available pets.");
