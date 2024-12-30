@@ -144,15 +144,27 @@ const mergePetIds = async (headers, proxy) => {
         if (mom !== undefined && dad !== undefined) {
             log.info(`Indehoy pets ${mom} and ${dad}💕`);
             await indehoy(headers, proxy, mom, dad);
-            logger.metrics.petsMerged++;
-        
+            log.metrics.petsMerged++;
+
             moms.splice(momIndex, 1);
             dads.splice(dadIndex, 1);
             await delay(1);
+        } else if (moms.length > 1 && momIndex + 1 < moms.length) {
+            const nextMom = moms[momIndex + 1];
+
+            if (mom !== nextMom) {
+                log.info(`Indehoy pets ${mom} and ${dad}💕`);
+            await indehoy(headers, proxy, mom, dad);
+            log.metrics.petsMerged++;
+
+                moms.splice(momIndex, 1);
+                moms.splice(momIndex, 1);
+                await delay(1);
+            };
         } else {
-            log.warn("Not enough pets available for indehoy 😢💔");
+            log.warn("you don't have any couple to indehoy 😢💔.");
             break;
-        }        
+        }
     }
 };
 
